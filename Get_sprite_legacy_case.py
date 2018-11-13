@@ -27,9 +27,12 @@ def find_false_in_sheet(sheet):
     for column in sheet.iter_cols():
         for cell in column:
             if re.search('prite|egacy', str(cell.value)):
-#                print(cell.value + sheet.cell(row=cell.row, column=3).value)
+#                print(cell.value + sheet.cell(row=cell.row, column=3).value + sheet.cell(row=cell.row, column=4).value)
                 if cell.column == 'C':
-                    sprite_and_legacy_case.append(sheet.cell(row=cell.row, column=6).value + ' \t ' + sheet.cell(row=cell.row, column=4).value + ' \t ' + sheet.cell(row=cell.row, column=5).value + ' \t ' + cell.value)
+                    sprite_and_legacy_case.append(("NULL" if sheet.cell(row=cell.row, column=6).value == None else sheet.cell(row=cell.row, column=6).value)
+                        + ' \t ' + ("NULL" if sheet.cell(row=cell.row, column=4).value == None else sheet.cell(row=cell.row, column=4).value)
+                        + ' \t ' + ("NULL" if sheet.cell(row=cell.row, column=5).value == None else sheet.cell(row=cell.row, column=5).value)
+                        + ' \t ' + cell.value)
 
 
 for i in range(len(all_sheets)):

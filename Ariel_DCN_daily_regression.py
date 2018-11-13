@@ -34,13 +34,13 @@ def find_false_in_sheet(sheet):
         for cell in column:
             if cell.value in hang_case_list:
 #                print(cell.value + sheet.cell(row=cell.row, column=3).value)
-                ower_hang_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value)
+                ower_hang_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(hang)")
             if cell.value in skip_case_list:
 #                print(cell.value + sheet.cell(row=cell.row, column=3).value)
-                ower_skip_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value)
+                ower_skip_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(skip)")
             if cell.value in fail_case_list:
 #                print(cell.value + sheet.cell(row=cell.row, column=3).value)
-                ower_fail_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value)
+                ower_fail_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(fail)")
 
 
 for temp_str in source_summary:
