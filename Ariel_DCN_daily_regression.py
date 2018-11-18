@@ -16,6 +16,12 @@ report_result = open(report_result_file, "w+", encoding='utf8')
 hang_case_list = []
 skip_case_list = []
 fail_case_list = []
+hang_case_list_detail = []
+skip_case_list_detail = []
+fail_case_list_detail = []
+hang_case_list_detail_zip = []
+skip_case_list_detail_zip = []
+fail_case_list_detail_zip = []
 
 # read the Status Tracker
 wb = openpyxl.load_workbook(status_tracker_file)
@@ -34,25 +40,34 @@ def find_false_in_sheet(sheet):
         for cell in column:
             if cell.value in hang_case_list:
 #                print(cell.value + sheet.cell(row=cell.row, column=3).value)
-                ower_hang_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(hang)")
+                ower_hang_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(Hang)")
             if cell.value in skip_case_list:
 #                print(cell.value + sheet.cell(row=cell.row, column=3).value)
-                ower_skip_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(skip)")
+                ower_skip_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(Skip)")
             if cell.value in fail_case_list:
 #                print(cell.value + sheet.cell(row=cell.row, column=3).value)
-                ower_fail_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(fail)")
+                ower_fail_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(Fail)")
 
 
 for temp_str in source_summary:
     if temp_str.find("Hang") != -1:
+        hang_case_id_detail = temp_str.split()[0]
+        if hang_case_id_detail not in hang_case_list_detail:
+            hang_case_list_detail.append(hang_case_id_detail)
         hang_case_id = temp_str.split('.')[0]
         if hang_case_id not in hang_case_list:
             hang_case_list.append(hang_case_id)
     if temp_str.find("Skip") != -1:
+        skip_case_id_detail = temp_str.split()[0]
+        if skip_case_id_detail not in skip_case_list_detail:
+            skip_case_list_detail.append(skip_case_id_detail)
         skip_case_id = temp_str.split('.')[0]
         if skip_case_id not in skip_case_list:
             skip_case_list.append(skip_case_id)
     if temp_str.find("Fail") != -1:
+        fail_case_id_detail = temp_str.split()[0]
+        if fail_case_id_detail not in fail_case_list_detail:
+            fail_case_list_detail.append(fail_case_id_detail)
         fail_case_id = temp_str.split('.')[0]
         if fail_case_id not in fail_case_list:
             fail_case_list.append(fail_case_id)
@@ -96,3 +111,66 @@ report_result.write("All FAIL case ...\n")
 for report in ower_fail_case:
     report_result.write(report+"\n")
 
+report_result.write("Get the CCL summary all HANG case ... \n")
+report_result.write(str(len(hang_case_list_detail)) + "\n")
+#for report in hang_case_list_detail:
+#    report_result.write(report + "\n")
+for i in range(len(hang_case_list_detail)):
+#    print(i)
+    if i == 0:
+        new_temp_str = hang_case_list_detail[i]
+    else:
+        if hang_case_list_detail[i-1].split('.')[0] == hang_case_list_detail[i].split('.')[0]:
+            if new_temp_str:
+                new_temp_str = new_temp_str + "." + str(hang_case_list_detail[i].split('.')[1])
+        else:
+            hang_case_list_detail_zip.append(new_temp_str)
+            new_temp_str = hang_case_list_detail[i]
+        if i == (len(hang_case_list_detail) - 1):
+            hang_case_list_detail_zip.append(new_temp_str)
+#    print(new_temp_str)
+#    print(hang_case_list_detail_zip)
+for report in hang_case_list_detail:
+    report_result.write(report + "\n")
+report_result.write("Get the CCL summary all SKIP case ... \n ")
+report_result.write(str(len(skip_case_list_detail)) + "\n")
+#for report in skip_case_list_detail:
+#    report_result.write(report + "\n")
+for i in range(len(skip_case_list_detail)):
+#    print(i)
+    if i == 0:
+        new_temp_str = skip_case_list_detail[i]
+    else:
+        if skip_case_list_detail[i-1].split('.')[0] == skip_case_list_detail[i].split('.')[0]:
+            if new_temp_str:
+                new_temp_str = new_temp_str + "." + str(skip_case_list_detail[i].split('.')[1])
+        else:
+            hang_case_list_detail_zip.append(new_temp_str)
+            new_temp_str = skip_case_list_detail[i]
+        if i == (len(skip_case_list_detail) - 1):
+            hang_case_list_detail_zip.append(new_temp_str)
+#    print(new_temp_str)
+#    print(hang_case_list_detail_zip)
+for report in hang_case_list_detail_zip:
+    report_result.write(report + "\n")
+report_result.write("Get the CCL summary all FAIL case ... \n ")
+report_result.write(str(len(fail_case_list_detail)) + "\n")
+#for report in fail_case_list_detail:
+#    report_result.write(report + "\n")
+for i in range(len(fail_case_list_detail)):
+#    print(i)
+    if i == 0:
+        new_temp_str = fail_case_list_detail[i]
+    else:
+        if fail_case_list_detail[i-1].split('.')[0] == fail_case_list_detail[i].split('.')[0]:
+            if new_temp_str:
+                new_temp_str = new_temp_str + "." + str(fail_case_list_detail[i].split('.')[1])
+        else:
+            fail_case_list_detail_zip.append(new_temp_str)
+            new_temp_str = fail_case_list_detail[i]
+        if i == (len(fail_case_list_detail) - 1):
+            fail_case_list_detail_zip.append(new_temp_str)
+#    print(new_temp_str)
+#    print(fail_case_list_detail_zip)
+for report in fail_case_list_detail_zip:
+    report_result.write(report + "\n")
