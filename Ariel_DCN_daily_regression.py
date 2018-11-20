@@ -122,7 +122,7 @@ for i in range(len(hang_case_list_detail)):
     else:
         if hang_case_list_detail[i-1].split('.')[0] == hang_case_list_detail[i].split('.')[0]:
             if new_temp_str:
-                new_temp_str = new_temp_str + "." + str(hang_case_list_detail[i].split('.')[1])
+                new_temp_str = new_temp_str + "," + str(hang_case_list_detail[i].split('.')[1])
         else:
             hang_case_list_detail_zip.append(new_temp_str)
             new_temp_str = hang_case_list_detail[i]
@@ -143,7 +143,7 @@ for i in range(len(skip_case_list_detail)):
     else:
         if skip_case_list_detail[i-1].split('.')[0] == skip_case_list_detail[i].split('.')[0]:
             if new_temp_str:
-                new_temp_str = new_temp_str + "." + str(skip_case_list_detail[i].split('.')[1])
+                new_temp_str = new_temp_str + "," + str(skip_case_list_detail[i].split('.')[1])
         else:
             hang_case_list_detail_zip.append(new_temp_str)
             new_temp_str = skip_case_list_detail[i]
@@ -164,7 +164,7 @@ for i in range(len(fail_case_list_detail)):
     else:
         if fail_case_list_detail[i-1].split('.')[0] == fail_case_list_detail[i].split('.')[0]:
             if new_temp_str:
-                new_temp_str = new_temp_str + "." + str(fail_case_list_detail[i].split('.')[1])
+                new_temp_str = new_temp_str + "," + str(fail_case_list_detail[i].split('.')[1])
         else:
             fail_case_list_detail_zip.append(new_temp_str)
             new_temp_str = fail_case_list_detail[i]
