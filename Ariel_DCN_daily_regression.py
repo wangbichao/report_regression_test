@@ -39,15 +39,20 @@ def find_false_in_sheet(sheet):
     for column in sheet.iter_cols():
         for cell in column:
             if cell.value in hang_case_list:
-#                print(cell.value + sheet.cell(row=cell.row, column=3).value)
-                ower_hang_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(Hang)")
+                for i in range(len(hang_case_list_detail_zip)):
+                    if cell.value in hang_case_list_detail_zip[i]:
+#                        ower_hang_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(Hang)")
+                        ower_hang_case.append(sheet.cell(row=cell.row, column=3).value + ' \t\t ' + hang_case_list_detail_zip[i] + "(Hang)")
             if cell.value in skip_case_list:
-#                print(cell.value + sheet.cell(row=cell.row, column=3).value)
-                ower_skip_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(Skip)")
+                for i in range(len(skip_case_list_detail_zip)):
+                    if cell.value in skip_case_list_detail_zip[i]:
+#                        ower_skip_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(Skip)")
+                        ower_skip_case.append(sheet.cell(row=cell.row, column=3).value + ' \t\t ' + skip_case_list_detail_zip[i] + "(Skip)")
             if cell.value in fail_case_list:
-#                print(cell.value + sheet.cell(row=cell.row, column=3).value)
-                ower_fail_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(Fail)")
-
+                for i in range(len(fail_case_list_detail_zip)):
+                    if cell.value in fail_case_list_detail_zip[i]:
+#                        ower_fail_case.append(sheet.cell(row=cell.row, column=3).value + ' \t ' + cell.value + "(Fail)")
+                        ower_fail_case.append(sheet.cell(row=cell.row, column=3).value + ' \t\t ' + fail_case_list_detail_zip[i] + "(Fail)")
 
 for temp_str in source_summary:
     if temp_str.find("Hang") != -1:
@@ -83,33 +88,6 @@ print("Get the CCL summary all FAIL case ... ")
 print(len(fail_case_list))
 print(fail_case_list)
 
-for i in range(len(all_sheets)):
-        sheet = wb[all_sheets[i]]
-        find_false_in_sheet(sheet)
-
-print("Report all HANG case with owner ... ")
-ower_hang_case.sort()
-print(len(ower_hang_case))
-print(ower_hang_case)
-report_result.write("All HANG case ...\n")
-for report in ower_hang_case:
-    report_result.write(report+"\n")
-
-print("Report all SKIP case with owner ... ")
-ower_skip_case.sort()
-print(len(ower_skip_case))
-print(ower_skip_case)
-report_result.write("All SKIP case ...\n")
-for report in ower_skip_case:
-    report_result.write(report+"\n")
-
-print("Report all FAIL case with owner ... ")
-ower_fail_case.sort()
-print(len(ower_fail_case))
-print(ower_fail_case)
-report_result.write("All FAIL case ...\n")
-for report in ower_fail_case:
-    report_result.write(report+"\n")
 
 report_result.write("Get the CCL summary all HANG case ... \n")
 report_result.write(str(len(hang_case_list_detail)) + "\n")
@@ -145,13 +123,13 @@ for i in range(len(skip_case_list_detail)):
             if new_temp_str:
                 new_temp_str = new_temp_str + "," + str(skip_case_list_detail[i].split('.')[1])
         else:
-            hang_case_list_detail_zip.append(new_temp_str)
+            skip_case_list_detail_zip.append(new_temp_str)
             new_temp_str = skip_case_list_detail[i]
         if i == (len(skip_case_list_detail) - 1):
-            hang_case_list_detail_zip.append(new_temp_str)
+            skip_case_list_detail_zip.append(new_temp_str)
 #    print(new_temp_str)
-#    print(hang_case_list_detail_zip)
-for report in hang_case_list_detail_zip:
+#    print(skip_case_list_detail_zip)
+for report in skip_case_list_detail_zip:
     report_result.write(report + "\n")
 report_result.write("Get the CCL summary all FAIL case ... \n ")
 report_result.write(str(len(fail_case_list_detail)) + "\n")
@@ -174,3 +152,34 @@ for i in range(len(fail_case_list_detail)):
 #    print(fail_case_list_detail_zip)
 for report in fail_case_list_detail_zip:
     report_result.write(report + "\n")
+
+
+for i in range(len(all_sheets)):
+        sheet = wb[all_sheets[i]]
+        find_false_in_sheet(sheet)
+
+
+report_result.write("\n\n\n=========================================================\n\n\n")
+print("Report all HANG case with owner ... ")
+ower_hang_case.sort()
+print(len(ower_hang_case))
+print(ower_hang_case)
+report_result.write("\nAll HANG case ...\n\n")
+for report in ower_hang_case:
+    report_result.write(report+"\n")
+
+print("Report all SKIP case with owner ... ")
+ower_skip_case.sort()
+print(len(ower_skip_case))
+print(ower_skip_case)
+report_result.write("\nAll SKIP case ...\n\n")
+for report in ower_skip_case:
+    report_result.write(report+"\n")
+
+print("Report all FAIL case with owner ... ")
+ower_fail_case.sort()
+print(len(ower_fail_case))
+print(ower_fail_case)
+report_result.write("\nAll FAIL case ...\n\n")
+for report in ower_fail_case:
+    report_result.write(report+"\n")

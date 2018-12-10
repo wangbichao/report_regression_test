@@ -9,8 +9,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf8')
 
 #ccl_report_file = "Z:\\bin_build\\ariel_build\\ariel_a0-x86_64-linux-dbg\\test_dcn_suite.txt"
 #ccl_report_file = "Z:\\bin_build\\b0_ariel_build\\ariel_b0-x86_64-linux-dbg\\test_dcn_suite.txt"
-ccl_report_file = "X:\\bin_build\\bin_pubilc_ariel\\ariel_a0-x86_64-linux-dbg\\test_dcn_suite.txt"
-
+#ccl_report_file = "X:\\bin_build\\bin_pubilc_ariel\\ariel_a0-x86_64-linux-dbg\\test_dcn_suite.txt"
+ccl_report_file = "X:\\bin_build\\test_dcn_suite.txt"
 status_tracker_file = "C:\\Users\\bichao\\Desktop\\Ariel_DCN2KA_IP_Diagnostics_Status_Tracker.xlsx"
 
 
